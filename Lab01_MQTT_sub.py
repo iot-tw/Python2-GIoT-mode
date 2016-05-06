@@ -1,6 +1,6 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
-# 搭配 LAB01 Arduino 的上傳資料 “33/88"
+# 搭配 LAB01 Arduino 的上傳資料 AT_DTX Raw Data
 import paho.mqtt.client as mqtt
 import json
 import ConfigParser                                             # 匯入 配置檔 解析模塊
@@ -39,10 +39,10 @@ def on_message(client, userdata, msg):
     #print(json_data)
     sensor_data = json.loads(json_data)['data']
     sensor_value = sensor_data.decode("hex")
-    #print('value: ' + sensor_value)
-    hum_value = sensor_value.split("/")[0]
-    temp_value = sensor_value.split("/")[1]
-    print("Hum:"+hum_value+", Temp:"+temp_value)
+    print('AT raw value: ' + sensor_value)
+    #hum_value = sensor_value.split("/")[0]
+    #temp_value = sensor_value.split("/")[1]
+    #print("Hum:"+hum_value+", Temp:"+temp_value)
 
 client = mqtt.Client()
 client.on_connect = on_connect
