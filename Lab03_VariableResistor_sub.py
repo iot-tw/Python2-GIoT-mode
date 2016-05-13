@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
 # 這是用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。
-# LAB03 的內容仍然保留。
+# LAB02 的代碼仍保留 comment 起來。
 
 import paho.mqtt.client as mqtt
 import json
