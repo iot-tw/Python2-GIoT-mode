@@ -1,2 +1,2 @@
 # server_python
-MQTT Server Side example on python
+Access GIoT MQTT Server Side example on python
