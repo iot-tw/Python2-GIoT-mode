@@ -11,7 +11,9 @@ Lab01_MQTT_sub.py 搭配 LAB01 Arduino 的上傳資料 AT_DTX Raw Data
 Lab02_HumidityTemperatureLEDs.py # 這是一個樹莓派的範例，用LED 燈號表示溫度高低。
 ## Lab 3 可變電阻代替 溫溼度計
 Lab03_VariableResistor_sub.py # 這是用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。
+
 LAB02 的代碼內容仍然保留。
 ## Lab 4 除了可變電阻再加上一個按鈕
 Lab04_VariableResistor_Button_sub.py # LAB03中 用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。仍保留
+
 增加一個按鈕，連續按壓5秒以上，發送一個 button down 事件通知。
