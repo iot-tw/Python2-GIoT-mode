@@ -1,6 +1,5 @@
 #! /bin/bash
 # GIoT MQTT dummy test
-# 連python 都不用直接用 mosquitto_sub 客戶端連線測試 GIoT 的MQTT Server
 hostname=52.193.146.103
 port=80
 topic=client/200000017/200000017-GIOT-MAKER

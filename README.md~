@@ -1,7 +1,6 @@
 # server_python
 Access GIoT MQTT Server Side example on python
 ## 範例程式說明
-
 Lab00_MQTT_dummy_test.py
 Lab00_MQTT_dummy_test.sh
 Lab01_MQTT_sub.py
