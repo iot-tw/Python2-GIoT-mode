@@ -1,5 +1,6 @@
-# server_python
+# 如何在Server 上讀取GIoT 的MQTT 資料？
 Access GIoT MQTT Server Side example on python
+按着四個LAB 完成模擬 數值與On-Off 資料的接受。需配合 arduino 項目的LAB 操作
 ## 範例程式說明
 ## Lab 0 初始 
 Lab00_MQTT_dummy_test.sh 連python 都不用直接用 mosquitto_sub 客戶端連線測試 GIoT 的MQTT Server
