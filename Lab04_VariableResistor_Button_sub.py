@@ -2,6 +2,11 @@
 # -*- coding: utf8 -*-
 # LAB03中 用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。仍保留
 # 增加一個按鈕，連續按壓5秒以上，發送一個 button down 事件通知。
+__author__ = "Marty Chao"
+__version__ = "1.0.1"
+__maintainer__ = "Marty Chao"
+__email__ = "marty@browan.com"
+__status__ = "Production"
 
 import paho.mqtt.client as mqtt
 import json
@@ -35,12 +40,13 @@ def on_message(client, userdata, msg):
     #print(json_data)
     sensor_data = json.loads(json_data)['data']
     #print( sensor_data[0:2])
+    # 42 是arduion 端定義 按鈕按下的代碼的 ASCII code 的值
     if sensor_data[0:2] == "42" :
     	button_status = "Yes" 
     else :
     	button_status = "No"
     sensor_value = str(int(float(sensor_data.decode("hex")[1:])/33333*100)) 
-    print('Button Pushed:\033[0;31;40m' + button_status +'\033[0m value: \033[0;32;40m' + sensor_value +'%\033[0m Time: '+ json.loads(json_data)['recv'] + " GWIP:" + json.loads(json_data)['extra']['gwip'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
+    print('Button Pushed:\033[0;31;40m' + button_status +'\033[0m value: \033[0;32;40m' + sensor_value +'%\033[0m Time: '+ json.loads(json_data)['recv'] + " GWID:" + json.loads(json_data)['extra']['gwid'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
     #hum_value = sensor_value.split("/")[0]
     #temp_value = sensor_value.split("/")[1]
     #print("Hum:"+hum_value+", Temp:"+temp_value)

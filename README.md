@@ -10,7 +10,7 @@ Lab00_MQTT_dummy_test.py dummy 就是不用模組也可驗證MQTT 連線的狀�
 Lab01_MQTT_sub.py 搭配 LAB01 Arduino 的上傳資料 AT_DTX Raw Data
 ## Lab 2 溼度，溫度 還有LED
 Lab02_HumidityTemperatureLEDs.py # 這是一個樹莓派的範例，用LED 燈號表示溫度高低。
-## Lab 3 可變電阻代替 溫溼度計
+## Lab 3 用可變電阻代替 溫溼度計
 Lab03_VariableResistor_sub.py # 這是用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。
 
 LAB02 的代碼內容仍然保留。

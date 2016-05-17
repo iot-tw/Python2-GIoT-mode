@@ -1,6 +1,12 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
 # 搭配 LAB01 Arduino 的上傳資料 AT_DTX Raw Data
+__author__ = "Marty Chao"
+__version__ = "1.0.1"
+__maintainer__ = "Marty Chao"
+__email__ = "marty@browan.com"
+__status__ = "Production"
+
 import paho.mqtt.client as mqtt
 import json
 import ConfigParser                                             # 匯入 配置檔 解析模塊
