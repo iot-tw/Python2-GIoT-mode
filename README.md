@@ -2,7 +2,7 @@
 Access GIoT MQTT Server Side example on python
 按着四個LAB 完成模擬 數值與On-Off 資料的接受。需配合 arduino 項目的LAB 操作
 ## 範例程式說明
-## Lab 0 初始 
+## Lab 0 初始 沒有模組時用下面兩程式先測試跟雲的連接，連帳號沒有也行。
 Lab00_MQTT_dummy_test.sh 連python 都不用直接用 mosquitto_sub 客戶端連線測試 GIoT 的MQTT Server
 
 Lab00_MQTT_dummy_test.py dummy 就是不用模組也可驗證MQTT 連線的狀況，credentials 範例裏的 IP, account 是會固定吐出MQTT 資訊的。
