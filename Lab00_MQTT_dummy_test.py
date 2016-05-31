@@ -2,34 +2,18 @@
 # -*- coding: utf8 -*-
 # dummy 就是不用模組也可驗證MQTT 連線的狀況，credentials 範例裏的 IP, account 是會固定吐出MQTT 資訊的。
 __author__ = "Marty Chao"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
 
 import paho.mqtt.client as mqtt
 import json
-import ConfigParser                                             # 匯入 配置檔 解析模塊
-from os.path import expanduser
-# 處理 giot credentials 設定值
-home = expanduser("~")
-default_identity_file = home + "/.giot/credentials"
-# credentials 範例
-# [dummy]
-# hostname = 52.193.146.103
-# portnumber= 80
-# topic = client/200000017/200000017-GIOT-MAKER
-# username = 200000017
-# password = 44554652
-print (default_identity_file)
-config = ConfigParser.ConfigParser()
-config.read(default_identity_file)
-HostName = config.get('dummy', 'hostname')
-print (HostName)
-PortNumber= config.get('dummy', 'portnumber')
-Topic = config.get('dummy', 'topic')
-UserName = config.get('dummy', 'username')
-Password = config.get('dummy', 'password')
+HostName = "52.193.146.103"
+PortNumber= "80"
+Topic = "client/200000017/200000017-GIOT-MAKER"
+UserName = "200000017"
+Password = "44554652"
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
