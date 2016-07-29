@@ -3,7 +3,7 @@
 # 這是用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。
 # LAB02 的代碼仍保留 comment 起來。
 __author__ = "Marty Chao"
-__version__ = "1.0.1"
+__version__ = "1.0.2"
 __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
@@ -45,7 +45,7 @@ def on_message(client, userdata, msg):
     #temp_value = sensor_value.split("/")[1]
     #print("Hum:"+hum_value+", Temp:"+temp_value)
 
-client = mqtt.Client()
+client = mqtt.Client(protocol=mqtt.MQTTv31)
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set(UserName, Password)

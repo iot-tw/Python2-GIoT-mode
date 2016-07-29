@@ -2,10 +2,11 @@
 # -*- coding: utf8 -*-
 # dummy 就是不用模組也可驗證MQTT 連線的狀況，credentials 範例裏的 IP, account 是會固定吐出MQTT 資訊的。
 __author__ = "Marty Chao"
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
+# Change Log 1.0.3 , support paho-mqtt v1.2
 
 import paho.mqtt.client as mqtt
 import json
@@ -36,7 +37,7 @@ def on_message(client, userdata, msg):
     temp_value = sensor_value.split("T")[1]
     print("date:"+hum_value+", time:"+temp_value)
 
-client = mqtt.Client()
+client = mqtt.Client(protocol=mqtt.MQTTv31)
 client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set(UserName, Password)
