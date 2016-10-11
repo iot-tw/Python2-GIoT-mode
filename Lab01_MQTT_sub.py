@@ -15,7 +15,7 @@ from os.path import expanduser
 # 處理 giot credentials 設定值
 home = expanduser("~")
 default_value = "default"
-default_identity_file = home + "/.giot/credentials"
+default_identity_file = "./credentials.lab"
 # credentials 範例 在家目錄下建立一個 .giot/crendentials 的檔案
 # 可以分多個[setion]在 用ConfigParser()時，可以靈活調用
 # [dummy]
@@ -52,9 +52,9 @@ def on_message(client, userdata, msg):
     gwid_data = json.loads(json_data)['extra']['gwid']
     # 過濾某一個特定GIoT AP 送進來的 MQTT 資料，其他的不要
     # 每個 Indoor AP, OutDoor AP 都有兩個gwid,所以要抓兩個進來,如果不考慮過濾可以註釋掉
-    if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
-    	print('AT raw value: ' + sensor_value)
-	print(json_data)
+    #if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
+    print('AT raw value: ' + sensor_value)
+    print(json_data)
     # 列印出從MQTT 抓來的資料，這裏是用“/" 做爲 溼度與溫度兩個資料的區分
     #hum_value = sensor_value.split("/")[0]
     #temp_value = sensor_value.split("/")[1]
