@@ -19,11 +19,11 @@ default_identity_file = home + "/.giot/credentials"
 # credentials 範例 在家目錄下建立一個 .giot/crendentials 的檔案
 # 可以分多個[setion]在 用ConfigParser()時，可以靈活調用
 # [dummy]
-# hostname = 52.193.146.103
-# portnumber= 80
-# topic = client/200000017/200000017-GIOT-MAKER
-# username = 200000017
-# password = 44554652
+# hostname = "52.193.146.103"
+# portnumber= "80"
+# topic = "client/200000017/200000017-GIOT-MAKER"
+# username = "200000017"
+# password = "44554652"
 config = ConfigParser.ConfigParser()
 config.read(default_identity_file)
 HostName = config.get(default_value, 'hostname')
