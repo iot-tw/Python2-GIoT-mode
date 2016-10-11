@@ -18,3 +18,5 @@ LAB02 的代碼內容仍然保留。
 Lab04_VariableResistor_Button_sub.py # LAB03中 用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。仍保留
 
 增加一個按鈕，連續按壓5秒以上，發送一個 button down 事件通知。
+## Lab 4 利用樹莓派 16x2 RGB LCD 顯示可變電阻數值
+Lab04_VR_Button_LCD_sub.py 
