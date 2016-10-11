@@ -15,7 +15,7 @@ from os.path import expanduser
 # 處理 giot credentials 設定值
 home = expanduser("~")
 default_value = "default"
-default_identity_file = home + "/.giot/credentials"
+default_identity_file = "./credentials.lab"
 config = ConfigParser.ConfigParser()
 config.read(default_identity_file)
 HostName = config.get(default_value, 'hostname')
