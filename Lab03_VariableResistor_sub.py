@@ -3,27 +3,28 @@
 # 這是用可變電阻當成 偵測器的輸入，轉動可變電阻可得到 0-100% 的數值。
 # LAB02 的代碼仍保留 comment 起來。
 __author__ = "Marty Chao"
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
+#Changelog 1.0.3 移除credentials 機制
+
 
 import paho.mqtt.client as mqtt
 import json
-import ConfigParser                                             # 匯入 配置檔 解析模塊
-from os.path import expanduser
-# 處理 giot credentials 設定值
-home = expanduser("~")
-default_value = "default"
-default_identity_file = "./credentials.lab"
-config = ConfigParser.ConfigParser()
-config.read(default_identity_file)
-HostName = config.get(default_value, 'hostname')
-PortNumber= config.get(default_value, 'portnumber')
-Topic = config.get(default_value, 'topic')
-UserName = config.get(default_value, 'username')
-Password = config.get(default_value, 'password')
-
+GIOT = "52.193.146.103"
+SELF = "192.168.88.198"
+HostName = GIOT
+PortNumber= 80
+Topic = "client/200000020/200000020-GIOT-MAKER"
+UserName = "200000020"
+Password = "18923571"
+macAddr = "050000c9"
+if HostName != "52.193.146.103":
+    PortNumber = 1883
+    Topic = "GIOT-GW/UL/1C497B499010"
+    UserName = "admin"
+    Password = "admin"
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -36,14 +37,23 @@ def on_connect(client, userdata, flags, rc):
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
     #print(msg.topic+" "+str(msg.payload))
-    json_data = msg.payload
+    if HostName == "52.193.146.103":
+        json_data = json.loads(msg.payload)
+        sensor_time = json_data['recv']
+        sensor_gwip = json_data['extra']['gwip']
+        sensor_snr = json_data['extra']['snr']
+    else:
+        json_data = json.loads(msg.payload)[0]
+        sensor_time = json_data['time']
+        sensor_gwip = json_data['gwip']
+        sensor_snr = json_data['snr']
     #print(json_data)
-    sensor_data = json.loads(json_data)['data']
-    sensor_value = str(int(float(sensor_data.decode("hex"))/33333*100)) 
-    print('value: ' + sensor_value +'% Time: '+ json.loads(json_data)['recv'] + " GWIP:" + json.loads(json_data)['extra']['gwip'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
-    #hum_value = sensor_value.split("/")[0]
-    #temp_value = sensor_value.split("/")[1]
-    #print("Hum:"+hum_value+", Temp:"+temp_value)
+    sensor_data = json_data['data']
+    #print sensor_data
+    sensor_macAddr = json_data['macAddr'][-8:]
+    if sensor_macAddr == macAddr:
+        sensor_value = str(int(float(sensor_data.decode("hex"))/33333*100))
+        print('value: ' + sensor_value +'% Time: '+ sensor_time + " GWIP:" + sensor_gwip + " SNR:" + str(sensor_snr))
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)
 client.on_connect = on_connect
