@@ -7,7 +7,7 @@ __version__ = "1.0.3"
 __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
-#Changelog 1.0.3 移除credentials 機制
+#Changelog 1.0.3 移除credentials 機制,增加私網公網MQTT 抓取機制
 
 
 import paho.mqtt.client as mqtt
@@ -19,6 +19,7 @@ PortNumber= 80
 Topic = "client/200000020/200000020-GIOT-MAKER"
 UserName = "200000020"
 Password = "18923571"
+# 只抓取所需要的模組設備
 macAddr = "050000c9"
 if HostName != "52.193.146.103":
     PortNumber = 1883
