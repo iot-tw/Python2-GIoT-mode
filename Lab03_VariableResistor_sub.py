@@ -8,6 +8,7 @@ __maintainer__ = "Marty Chao"
 __email__ = "marty@browan.com"
 __status__ = "Production"
 #Changelog 1.0.3 移除credentials 機制,增加私網公網MQTT 抓取機制
+#           增加能從自建MQTT broker 上頭取資料
 
 
 import paho.mqtt.client as mqtt
@@ -23,7 +24,10 @@ Password = "18923571"
 macAddr = "050000c9"
 if HostName != "52.193.146.103":
     PortNumber = 1883
-    Topic = "GIOT-GW/UL/1C497B499010"
+    #Topic = "GIOT-GW/UL/1C497B499010"
+    # 用+號可以把broker 上頭所有的UL topic 都抓下來
+    Topic = "GIOT-GW/UL/+"
+    #如果把 mosqitto.conf 的設定取消 #allow_anonymous false 下面U/P 也不需要了.
     UserName = "admin"
     Password = "admin"
 

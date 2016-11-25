@@ -12,7 +12,7 @@ __status__ = "Production"
 import paho.mqtt.client as mqtt
 import json
 HostName = "52.193.146.103"
-PortNumber= 80
+PortNumber = 80
 Topic = "client/200000020/200000020-GIOT-MAKER"
 UserName = "200000020"
 Password = "18923571"
