@@ -15,7 +15,7 @@ from os.path import expanduser
 # 處理 giot credentials 設定值
 home = expanduser("~")
 default_value = "default"
-default_identity_file = home + "/.giot/credentials"
+default_identity_file = "./credentials.lab"
 config = ConfigParser.ConfigParser()
 config.read(default_identity_file)
 HostName = config.get(default_value, 'hostname')
@@ -42,10 +42,10 @@ def on_message(client, userdata, msg):
     #print( sensor_data[0:2])
     # 42 是arduion 端定義 按鈕按下的代碼的 ASCII code 的值
     if sensor_data[0:2] == "42" :
-    	button_status = "Yes" 
+    	button_status = "Yes"
     else :
     	button_status = "No"
-    sensor_value = str(int(float(sensor_data.decode("hex")[1:])/33333*100)) 
+    sensor_value = str(int(float(sensor_data.decode("hex")[1:])/33333*100))
     print('Button Pushed:\033[0;31;40m' + button_status +'\033[0m value: \033[0;32;40m' + sensor_value +'%\033[0m Time: '+ json.loads(json_data)['recv'] + " GWID:" + json.loads(json_data)['extra']['gwid'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
     #hum_value = sensor_value.split("/")[0]
     #temp_value = sensor_value.split("/")[1]
