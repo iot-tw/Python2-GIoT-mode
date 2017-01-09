@@ -1,6 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
 # 這是一個樹莓派的範例，用LED 燈號表示溫度高低。
+# 需要有Raspberry Pi 才能使用
 
 # sudo pip install paho-mqtt
 
