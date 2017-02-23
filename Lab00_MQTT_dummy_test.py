@@ -12,21 +12,25 @@ __status__ = "Production"
 import paho.mqtt.client as mqtt
 import json
 HostName = "52.193.146.103"
-PortNumber= "80"
+PortNumber = "80"
 Topic = "client/200000017/200000017-GIOT-MAKER"
 UserName = "200000017"
 Password = "44554652"
 MacAddr = "00123456"
 
 # The callback for when the client receives a CONNACK response from the server.
+
+
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    print("Connected with result code " + str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(Topic)
 
 # The callback for when a PUBLISH message is received from the server.
+
+
 def on_message(client, userdata, msg):
     #print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
@@ -37,9 +41,9 @@ def on_message(client, userdata, msg):
     date_value = sensor_time.split("T")[0]
     time_value = sensor_time.split("T")[1]
     if sensor_macaddr == MacAddr:
-        print("Topic:"+ msg.topic)
+        print("Topic:" + msg.topic)
         print(json_data)
-        print("date:"+date_value+", time:"+time_value)
+        print("date:" + date_value + ", time:" + time_value)
         print("AT+DTX ASCII: " + sensor_value)
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)
@@ -54,4 +58,3 @@ client.connect(HostName, PortNumber, 60)
 # Other loop*() functions are available that give a threaded interface and a
 # manual interface.
 client.loop_forever()
-
