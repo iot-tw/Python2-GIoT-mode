@@ -9,8 +9,14 @@ __status__ = "Production"
 # Change Log 1.0.3 , support paho-mqtt v1.2
 # Change Log 1.0.4 , 優化顯示訊息
 
-import paho.mqtt.client as mqtt
+try:
+    import paho.mqtt.client as mqtt
+except ImportError:
+    print("You python need isntal paho-mqtt module")
+    print("cmd:pip install paho-mqtt")
+    exit()
 import json
+# 下方資料是自動吐出json資料，不需要模組發送就會有資料
 HostName = "52.193.146.103"
 PortNumber = "80"
 Topic = "client/200000017/200000017-GIOT-MAKER"
@@ -32,19 +38,19 @@ def on_connect(client, userdata, flags, rc):
 
 
 def on_message(client, userdata, msg):
-    #print(msg.topic+" "+str(msg.payload))
+    # print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
     sensor_data = json.loads(json_data)['data']
     sensor_macaddr = json.loads(json_data)['macAddr']
-    sensor_value = sensor_data.decode("hex")
     sensor_time = json.loads(json_data)['recv']
     date_value = sensor_time.split("T")[0]
     time_value = sensor_time.split("T")[1]
     if sensor_macaddr == MacAddr:
         print("Topic:" + msg.topic)
         print(json_data)
-        print("date:" + date_value + ", time:" + time_value)
-        print("AT+DTX ASCII: " + sensor_value)
+        print "date:" + date_value + ", time:" + time_value + "AT+DTX payload:"
+        + sensor_data
+
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)
 client.on_connect = on_connect
