@@ -22,7 +22,6 @@ UserName = "200000020"
 Password = "18923571"
 # 只抓取所需要的模組設備
 filter = 1 # if filter is 0, show all module
-:s
 macAddr = "050000c9"
 if HostName != "52.193.146.103":
     PortNumber = 1883
