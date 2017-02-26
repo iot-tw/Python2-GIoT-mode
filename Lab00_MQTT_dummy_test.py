@@ -48,8 +48,7 @@ def on_message(client, userdata, msg):
     if sensor_macaddr == MacAddr:
         print("Topic:" + msg.topic)
         print(json_data)
-        print "date:" + date_value + ", time:" + time_value + "AT+DTX payload:"
-        + sensor_data
+        print "date:" + date_value + ", time:" + time_value + "AT+DTX payload:" + sensor_data
 
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)

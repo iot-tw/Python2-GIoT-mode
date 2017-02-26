@@ -21,6 +21,8 @@ Topic = "client/200000020/200000020-GIOT-MAKER"
 UserName = "200000020"
 Password = "18923571"
 # 只抓取所需要的模組設備
+filter = 1 # if filter is 0, show all module
+:s
 macAddr = "050000c9"
 if HostName != "52.193.146.103":
     PortNumber = 1883
@@ -58,7 +60,7 @@ def on_message(client, userdata, msg):
     sensor_data = json_data['data']
     # print sensor_data
     sensor_macAddr = json_data['macAddr'][-8:]
-    if sensor_macAddr == macAddr:
+    if sensor_macAddr == macAddr or filter == 0:
         sensor_value = str(int(float(sensor_data.decode("hex"))/1023*100))
         print('value: ' + sensor_value + '% Time: ' + sensor_time + " GWIP:" + sensor_gwip + " SNR:" + str(sensor_snr))
 
