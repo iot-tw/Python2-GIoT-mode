@@ -20,3 +20,8 @@ Lab04_VariableResistor_Button_sub.py # LAB03中 用可變電阻當成 偵測器�
 增加一個按鈕，連續按壓5秒以上，發送一個 button down 事件通知。
 ## Lab 4 利用樹莓派 16x2 RGB LCD 顯示可變電阻數值
 Lab04_VR_Button_LCD_sub.py 
+
+## Downlink
+pub_dl_local.py
+
+可利用自己架設的MQTT Broker 下發 Downlink 指令
