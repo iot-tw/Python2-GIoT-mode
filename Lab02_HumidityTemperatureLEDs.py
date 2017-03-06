@@ -8,7 +8,6 @@
 import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 import json
-import time
 # 處理 giot credentials 設定值
 import ConfigParser                                             # 匯入 配置檔 解析模塊
 from os.path import expanduser
@@ -18,7 +17,7 @@ default_identity_file = home + "/.giot/credentials"
 config = ConfigParser.ConfigParser()
 config.read(default_identity_file)
 HostName = config.get(default_value, 'hostname')
-PortNumber= config.get(default_value, 'portnumber')
+PortNumber = config.get(default_value, 'portnumber')
 Topic = config.get(default_value, 'topic')
 UserName = config.get(default_value, 'username')
 Password = config.get(default_value, 'password')
@@ -26,6 +25,7 @@ Password = config.get(default_value, 'password')
 LED_R = 17
 LED_Y = 27
 LED_G = 22
+
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -35,14 +35,15 @@ def on_connect(client, userdata, flags, rc):
     # reconnect then subscriptions will be renewed.
     client.subscribe(Topic)
 
+
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    #print(msg.topic+" "+str(msg.payload))
+    # print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
-    #print(json_data)
+    # print(json_data)
     sensor_data = json.loads(json_data)['data']
     sensor_value = sensor_data.decode("hex")
-    #print('value: ' + sensor_value)
+    # print('value: ' + sensor_value)
     hum_value = sensor_value.split("/")[0]
     temp_value = sensor_value.split("/")[1]
     print("Hum:"+hum_value+", Temp:"+temp_value)
@@ -60,11 +61,14 @@ def on_message(client, userdata, msg):
         led_off(LED_Y)
         led_on(LED_G)
 
-def led_on (pin):
+
+def led_on(pin):
     GPIO.output(pin, GPIO.HIGH)
 
-def led_off (pin):
+
+def led_off(pin):
     GPIO.output(pin, GPIO.LOW)
+
 
 # 鏈接MQTT
 client = mqtt.Client()

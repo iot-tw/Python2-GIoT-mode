@@ -18,17 +18,19 @@ UserName = "200000020"
 Password = "18923571"
 macAddr = "050000c9"
 
+
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    print("Connected with result code " + str(rc))
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(Topic)
 
+
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    #print(msg.topic+" "+str(msg.payload))
+    # print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
     sensor_data = json.loads(json_data)['data']
     # 處理MQTT 抓下來的 資料json 中的 data 欄位，用hex decode 回來
@@ -39,11 +41,12 @@ def on_message(client, userdata, msg):
     sensor_macAddr = json.loads(json_data)['macAddr']
     # 過濾某一個特定GIoT AP 送進來的 MQTT 資料，其他的不要
     # 每個 Indoor AP, OutDoor AP 都有兩個gwid,所以要抓兩個進來,如果不考慮過濾可以註釋掉
-    #if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
+    # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
     if sensor_macAddr == macAddr:
-        print('ID: '+ macAddr)
+        print('ID: ' + macAddr)
         print('AT ASCII value: ' + sensor_value)
     print(json_data)
+
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)
 client.on_connect = on_connect
