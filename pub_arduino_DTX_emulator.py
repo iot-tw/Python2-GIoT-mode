@@ -29,8 +29,7 @@ parser.add_option("-m", "--mac", action="store", dest="MAC",
 (options, args) = parser.parse_args()
 if options.data:
     data = options.data
-mid = "".join(map(lambda t: format(t, "02X"),
-              [random.randrange(256) for x in range(16)]))
+mid = str(random.randint(1, 99))
 # This is IDU GID
 # GID = "1C497B499010"
 # GID = "1C497B4321AA"
@@ -41,12 +40,13 @@ MAC = options.MAC
 topic = "GIOT-GW/UL/" + GID
 username = "admin"
 password = "admin"
-msg = '[{"channel":923125000, "sf":10, \
-    + "time":"' + datetime.datetime.now().isoformat()[:19] + '", ' \
-    + '"gwip":"192.168.88.1", \
-    + "gwid":"0000f835dde7de2", "repeater":"00000000ffffffff" \
-    + "systype":10, "rssi":-118.0, "snr":0.5, "snr_max":3.8, "snr_min":-4.5, \
-    + "macAddr":"00000000' + MAC + '", ' \
+msg = '[{"channel":923125000, "sf":10, '\
+    + '"time":"' + datetime.datetime.now().isoformat()[:19] + '", ' \
+    + '"gwip":"192.168.88.1", '\
+    + '"gwid":"0000f835dde7de2", "repeater":"00000000ffffffff", ' \
+    + '"systype":' + str(int(MAC[:2], 16)) + ', ' \
+    + '"rssi":-118.0, "snr":0.5, "snr_max":3.8, "snr_min":-4.5, ' \
+    + '"macAddr":"00000000' + MAC + '", ' \
     + '"data":"' + data + '",' \
     + '"frameCnt":"' + mid + '",' \
     + '"port":2}]'
