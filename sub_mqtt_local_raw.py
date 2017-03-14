@@ -32,7 +32,7 @@ parser.add_option("-u", "--user", action="store",
                   dest="username", default="admin",
                   help="sub from MQTT broker's username ")
 parser.add_option("-P", "--pw", action="store",
-                  dest="password", default="localhost",
+                  dest="password", default="admin",
                   help="sub from MQTT broker's password ")
 parser.add_option("-p", action="store",
                   dest="port", default=1883,
