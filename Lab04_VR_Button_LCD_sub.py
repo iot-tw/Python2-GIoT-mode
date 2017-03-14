@@ -54,7 +54,7 @@ def on_message(client, userdata, msg):
     else:
         button_status = "No"
     sensor_value = str(int(float(sensor_data.decode("hex")[1:])/1023*100))
-    print('Button Pushed:\033[0;31;40m' + button_status + '\033[0m value: \033[0;32;40m' + sensor_value +'%\033[0m Time: '+ json.loads(json_data)['recv'] + " GWIP:" + json.loads(json_data)['extra']['gwip'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
+    print('Button Pushed:\033[0;31;40m' + button_status + '\033[0m value: \033[0;32;40m' + sensor_value + '%\033[0m Time: ' + json.loads(json_data)['recv'] + " GWIP:" + json.loads(json_data)['extra']['gwip'] + " SNR:" + str(json.loads(json_data)['extra']['snr']))
     # lcd.clear()
     lcd.message("R-Value:" + sensor_value + "%\n")
     lcd.message("Button :" + button_status + "\n")
