@@ -1,6 +1,9 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
-# 抓取Local MQTT Broker 的UL 資料
+'''
+抓取Local MQTT Broker 的UL 資料,前提是要有自己的GIoT Gateway。
+使用台北市府物聯網，宜蘭縣府，新竹市府的PoC 環境是不同格式。
+'''
 __author__ = "Marty Chao"
 __version__ = "1.0.2"
 __maintainer__ = "Marty Chao"
@@ -52,19 +55,21 @@ def on_connect(client, userdata, flags, rc):
 
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
+    '''
+    GIoT Module Json UpLink Example
+    GIOT-GW/UL/xxxx [{"channel":923125000, "sf":10,
+    "time":"2017-03-13T03:59:29", "gwip":"10.6.1.49",
+    "gwid":"0000f835dde7de2e", "repeater":"00000000ffffffff",
+    "systype":10, "rssi":-118.0, "snr":0.5, "snr_max":3.8, "snr_min":-4.5,
+    "macAddr":"000000000a000158", "data":"015dff017b81ed0736767c",
+    "frameCnt":26920, "fport":2}]
+    '''
     # client.subscribe(Topic)
-    # client.subscribe("GIOT-GW/UL/1C497B4321AA")
-    # ##GIOT-GW/UL/xxxx [{"channel":923125000, "sf":10,
-    # ##"time":"2017-03-13T03:59:29", "gwip":"10.6.1.49",
-    # ##"gwid":"0000f835dde7de2e", "repeater":"00000000ffffffff",
-    # ##"systype":10, "rssi":-118.0, "snr":0.5, "snr_max":3.8, "snr_min":-4.5,
-    # ##"macAddr":"000000000a000158", "data":"015dff017b81ed0736767c",
-    # ##"frameCnt":26920, "fport":2}]
     # client.subscribe("GIOT-GW/UL/+")
+    # client.subscribe("GIOT-GW/UL/1C497B4321AA")
     client.subscribe("#")
     # GIOT-GW/DL/1C497B499010 [{"macAddr":"0000000004000476","data":"5678","id":"998877ffff0001","extra":{"port":2, "txpara":6}}]
     # GIOT-GW/DL-report/1C497B499010 {"dataId":"16CBD520C19162013CD6436CB330565E", "resp":"2016-11-30T15:02:40Z", "status":-1}
-# The callback for when a PUBLISH message is received from the server.
 
 
 def on_message(client, userdata, msg):
@@ -132,18 +137,17 @@ try:
     client.on_connect = on_connect
     client.on_message = on_message
     client.username_pw_set(options.username, options.password)
-# 這裏第三個參數可以調整，每個多少時間檢查MQTT 連線狀態，通常60秒已經算短的了，爲了實驗，可以用60秒。
-# 2-5分鐘都算合理，google 的 GCM 都28分鐘檢查一次了，在實際量產部署時，要重新考慮這個值，頻寬及Server Load 不是免費啊。
+"""
+這裏第三個參數可以調整，每個多少時間檢查MQTT 連線狀態，通常60秒已經算短的了，
+爲了實驗，可以用60秒。2-5分鐘都算合理，google 的 GCM 都28分鐘檢查一次了，
+在實際量產部署時，要重新考慮這個值，頻寬及Server Load 不是免費啊。
+"""
     try:
         client.connect(options.host, options.port, 60)
     except:
         print ('Can not connect to Broker')
         print ('Specify a IP address with option -i.')
         sys.exit()
-# Blocking call that processes network traffic, dispatches callbacks and
-# handles reconnecting.
-# Other loop*() functions are available that give a threaded interface and a
-# manual interface.
     client.loop_forever()
 except KeyboardInterrupt:
     sys.stdout.flush()
