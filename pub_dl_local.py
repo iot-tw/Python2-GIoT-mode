@@ -1,5 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf8 -*-
+''' Local MQTT Broker 的DL的script,前提是要有自己的GIoT Gateway。
+使用台北市府物聯網，宜蘭縣府，新竹市府的PoC 環境目前不支持DL。'''
 import paho.mqtt.client as mqtt
 import socket
 import random
