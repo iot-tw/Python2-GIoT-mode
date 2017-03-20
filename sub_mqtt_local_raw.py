@@ -44,7 +44,7 @@ parser.add_option("-p", action="store",
 if options.display_lcd:
     import Adafruit_CharLCD as LCD
     lcd = LCD.Adafruit_CharLCDPlate()
-print ("MQTT broker is:" + options.host + ":" + options.port)
+print ("MQTT broker is:" + options.host + ":" + str(options.port))
 print ("MQTT Topic is:" + options.topic)
 
 # The callback for when the client receives a CONNACK response from the server.
@@ -79,6 +79,7 @@ def on_message(client, userdata, msg):
     if msg.topic[:11] == "GIOT-GW/DL/":
         sensor_mac = json.loads(json_data)[0]['macAddr']
         sensor_data = json.loads(json_data)[0]['data']
+        sensor_value = sensor_data.decode("hex")
         sensor_id = json.loads(json_data)[0]['id']
         sensor_txpara = json.loads(json_data)[0]['extra']['txpara']
 
@@ -137,11 +138,10 @@ try:
     client.on_connect = on_connect
     client.on_message = on_message
     client.username_pw_set(options.username, options.password)
-"""
-這裏第三個參數可以調整，每個多少時間檢查MQTT 連線狀態，通常60秒已經算短的了，
-爲了實驗，可以用60秒。2-5分鐘都算合理，google 的 GCM 都28分鐘檢查一次了，
-在實際量產部署時，要重新考慮這個值，頻寬及Server Load 不是免費啊。
-"""
+# 這裏第三個參數可以調整，每個多少時間檢查MQTT 連線狀態，通常60秒已經算短的了，
+# 爲了實驗，可以用60秒。2-5分鐘都算合理，google 的 GCM 都28分鐘檢查一次了，
+# 在實際量產部署時，要重新考慮這個值，頻寬及Server Load 不是免費啊。
+
     try:
         client.connect(options.host, options.port, 60)
     except:
