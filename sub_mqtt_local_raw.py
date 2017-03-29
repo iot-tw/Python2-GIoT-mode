@@ -117,18 +117,21 @@ def on_message(client, userdata, msg):
               + '\tGWID:' + str(gwid_data).rjust(8))
     elif msg.topic[:11] == 'GIOT-GW/DL/':
         print('Type:' + sensor_type + '\tMac:' + str(sensor_mac)[8:] + '\tMID:' + str(sensor_id) + '\tTXPara:' + str(sensor_txpara))
+    elif msg.topic[:17] == 'GIOT-GW/DL-report':
+        print('Response:' + msg.topic[18:] + '\tStatus:' + str(json.loads(json_data)['status']) + '\tID:' + json.loads(json_data)['dataId'])
     else:
-        print (msg.payload)
+        print (msg.topic + msg.payload)
     if options.display_lcd:
         lcd.clear()
         lcd.message(str(sensor_mac)[8:]+'C:'+str(sensor_count))
         lcd.message('\nS/RSSI' + str(sensor_snr) + '/' + str(sensor_rssi))
 
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
-    try:
-        print('     Payload: ' + sensor_data + ' \x1b[6;30;42m' + 'HEX2ASCII: ' + '\x1b[0m' + sensor_value)
-    except UnicodeDecodeError:
-        print('     Payload: ' + sensor_data)
+    if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
+        try:
+            print('     Payload: ' + sensor_data + ' \x1b[6;30;42m' + 'HEX2ASCII:' + '\x1b[0m' + sensor_data.decode("hex"))
+        except UnicodeDecodeError:
+            print('     Payload: ' + sensor_data)
     if options.long_detail:
         print(json_data)
 

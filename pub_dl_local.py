@@ -45,8 +45,14 @@ MAC = options.MAC
 topic = "GIOT-GW/DL/" + GID
 # txpara = "22" is Class C, txpara=6 is class A
 txpara = "6"
-if options.classtype == "A":
+if options.classtype == "a":
     txpara = "6"
+if options.classtype == "1a":
+    txpara = '"10"'
+if options.classtype == "ac":
+    txpara = '"24"'
+if options.classtype == "A":
+    txpara = '"20"'
 elif options.classtype == "C":
     txpara = '"22"'
 elif options.classtype == "B":
