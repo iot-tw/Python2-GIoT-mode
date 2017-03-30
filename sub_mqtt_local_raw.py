@@ -133,7 +133,7 @@ def on_message(client, userdata, msg):
         try:
             print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
             if sensor_data.decode("hex") == str(sensor_mac)[8:].upper():
-                print('\x1b[6;30;42m' + 'pub_dl_local.py -i ' + options.host +' -g '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
+                print('\x1b[6;30;42m' + 'pub_dl_local.py -i ' + options.host +' -m '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
                 lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"
                 if lora_restart == 'Y' or lora_restart == 'y':
                     sys.exit()
