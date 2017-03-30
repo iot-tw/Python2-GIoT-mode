@@ -131,8 +131,9 @@ def on_message(client, userdata, msg):
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
     if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
         try:
-            if "ff" == sensor_data:
-                print('\x1b[6;30;42m' + 'DL CMD:pub_dl_local.py -i ' + options.host +' -g '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
+            print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
+            if sensor_data.decode("hex") == str(sensor_mac)[8:].upper():
+                print('\x1b[6;30;42m' + 'pub_dl_local.py -i ' + options.host +' -g '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
                 lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"
                 if lora_restart == 'Y' or lora_restart == 'y':
                     sys.exit()
