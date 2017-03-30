@@ -40,6 +40,8 @@ parser.add_option("-P", "--pw", action="store",
 parser.add_option("-p", action="store",
                   dest="port", default=1883,
                   help="sub from MQTT broker's Port ")
+parser.add_option("-R","--downlink", action="store_true",
+                  help="If payload is 'FF' print out Downlink Command")
 (options, args) = parser.parse_args()
 if options.display_lcd:
     import Adafruit_CharLCD as LCD
@@ -129,6 +131,11 @@ def on_message(client, userdata, msg):
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
     if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
         try:
+            if "ff" == sensor_data:
+                print('\x1b[6;30;42m' + 'DL CMD:pub_dl_local.py -i ' + options.host +' -g '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
+                lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"
+                if lora_restart == 'Y' or lora_restart == 'y':
+                    sys.exit()
             print('     Payload: ' + sensor_data + ' \x1b[6;30;42m' + 'HEX2ASCII:' + '\x1b[0m' + sensor_data.decode("hex"))
         except UnicodeDecodeError:
             print('     Payload: ' + sensor_data)
