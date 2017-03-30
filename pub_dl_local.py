@@ -52,7 +52,7 @@ if options.classtype == "1a":
 if options.classtype == "ac":
     txpara = '"24"'
 if options.classtype == "A":
-    txpara = '"20"'
+    txpara = '"6"'
 elif options.classtype == "C":
     txpara = '"22"'
 elif options.classtype == "B":
