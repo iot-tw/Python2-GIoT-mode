@@ -25,3 +25,7 @@ Lab04_VR_Button_LCD_sub.py
 pub_dl_local.py
 
 可利用自己架設的MQTT Broker 下發 Downlink 指令
+## Subscribe Local MQTT Broker 
+sub_mqtt_local_raw.py
+
+從自己架設的MQTT Broker 抓取上行 LoRa 資料
