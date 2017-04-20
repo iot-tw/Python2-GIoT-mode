@@ -50,15 +50,15 @@ msg = '[{"channel":923125000, "sf":10, '\
     + '"data":"' + data + '",' \
     + '"frameCnt":"' + mid + '",' \
     + '"port":2}]'
-print ("Broker:"+options.host+" Topic:"+topic)
-print (msg)
+print("Broker:"+options.host+" Topic:"+topic)
+print(msg)
 client = mqtt.Client(protocol=mqtt.MQTTv31)
 try:
     client.username_pw_set(username, password)
     client.connect(options.host, 1883, 60)
 except socket.error as e:
-    print ("Can't Connect to " + options.host)
-    print ("May use -i to specify broker server?")
+    print("Can't Connect to " + options.host)
+    print("May use -i to specify broker server?")
 
 client.publish(topic, msg)
 client.disconnect()

@@ -2,6 +2,12 @@
 # -*- coding: utf8 -*-
 ''' Local MQTT Broker 的DL的script,前提是要有自己的GIoT Gateway。
 使用台北市府物聯網，宜蘭縣府，新竹市府的PoC 環境目前不支持DL。'''
+__author__ = "Marty Chao"
+__version__ = "1.0.0"
+__maintainer__ = "Marty Chao"
+__email__ = "marty@browan.com"
+__status__ = "Production"
+# Change log 1.0.1, init version
 import paho.mqtt.client as mqtt
 import socket
 import random
@@ -9,12 +15,12 @@ from optparse import OptionParser
 import time
 now_time = time.strftime("%Hc%Mc%S")
 usage = "usage: %prog [options] [data]\n \
-    options: -d for sending data\n \
-             -c [A|B|C] for Class Mode.  Default is Class A\n \
+    options: -d for sending hex data\n \
+             -c [A|a|C|c] for Class Mode.  Default is Class A\n \
              -i IP for which MQTT Broker. Default is localhost\n \
              -g GID for DL GW. Default is 00001c497b431fcd\n \
              -m MAC for DL Node. Default is 04000476 \n \
-    e.g.: '%prog --data \"12345678901\" will downlink to modules"
+    e.g.: '%prog --data \"12345678901\" will downlink to module 04000476 by Localhost Broker,Class A confirmed"
 parser = OptionParser(usage)
 parser.add_option("-d", "--data", action="store", dest="data",
                   default=now_time,
@@ -36,14 +42,9 @@ if options.data:
     data = options.data
 mid = "".join(map(lambda t: format(t, "02X"), [random.randrange(256)
               for x in range(16)]))
-# This is  GID example
-# GID = "00001c497b431fcd"
-# GID = "1C497B4321AA"
 GID = options.GID
-# MAC = "04000476"
 MAC = options.MAC
 topic = "GIOT-GW/DL/" + GID
-# txpara = "22" is Class C, txpara=6 is class A
 txpara = "6"
 if options.classtype == "a":
     txpara = '"2"'
