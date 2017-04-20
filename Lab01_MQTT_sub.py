@@ -16,7 +16,7 @@ PortNumber = 80
 Topic = "client/200000020/200000020-GIOT-MAKER"
 UserName = "200000020"
 Password = "18923571"
-macAddr = "050000c9"
+macAddr = "05000095"
 
 
 # The callback for when the client receives a CONNACK response from the server.

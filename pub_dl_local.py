@@ -46,15 +46,13 @@ topic = "GIOT-GW/DL/" + GID
 # txpara = "22" is Class C, txpara=6 is class A
 txpara = "6"
 if options.classtype == "a":
-    txpara = "6"
-if options.classtype == "1a":
-    txpara = '"10"'
-if options.classtype == "ac":
-    txpara = '"24"'
-if options.classtype == "A":
+    txpara = '"2"'
+elif options.classtype == "A":
     txpara = '"6"'
-elif options.classtype == "C":
+elif options.classtype == "c":
     txpara = '"22"'
+elif options.classtype == "C":
+    txpara = '"26"'
 elif options.classtype == "B":
     print("Not Support yet.")
 msg = '[{"macAddr":"00000000' + MAC + '",' \
@@ -63,7 +61,7 @@ msg = '[{"macAddr":"00000000' + MAC + '",' \
     + '"extra":{"port":2, "txpara":'+txpara+'}}]'
 print ("Broker:"+options.host+" Topic:"+topic+" Class Mode:"+options.classtype)
 print (msg)
-client = mqtt.Client()
+client = mqtt.Client(protocol=mqtt.MQTTv31)
 try:
     client.connect(options.host, 1883, 60)
 except socket.error as e:
