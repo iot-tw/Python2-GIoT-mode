@@ -21,7 +21,7 @@ Topic = "client/200000020/200000020-GIOT-MAKER"
 UserName = "200000020"
 Password = "18923571"
 # 只抓取所需要的模組設備
-filter = 1 # if filter is 0, show all module
+filter = 0 # if filter is 0, show all module
 macAddr = "050000c9"
 if HostName != "52.193.146.103":
     PortNumber = 1883
@@ -35,8 +35,11 @@ if HostName != "52.193.146.103":
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
-    # print("Connected with result code "+str(rc))
-
+    print("Connected with result code "+str(rc))
+    if rc == 4:
+        print("Please Chect your Username and password")
+    elif rc == 0:
+        print("Connected,wait for MQTT data")
     # Subscribing in on_connect() means that if we lose the connection and
     # reconnect then subscriptions will be renewed.
     client.subscribe(Topic)
@@ -49,19 +52,19 @@ def on_message(client, userdata, msg):
         json_data = json.loads(msg.payload)
         sensor_time = json_data['recv']
         sensor_gwip = json_data['extra']['gwip']
-        sensor_snr = json_data['extra']['snr']
+        sensor_rssi = json_data['extra']['rssi']
     else:
         json_data = json.loads(msg.payload)[0]
         sensor_time = json_data['time']
         sensor_gwip = json_data['gwip']
-        sensor_snr = json_data['snr']
+        sensor_rssi = json_data['rssi']
     # print(json_data)
     sensor_data = json_data['data']
     # print sensor_data
     sensor_macAddr = json_data['macAddr'][-8:]
     if sensor_macAddr == macAddr or filter == 0:
         sensor_value = str(int(float(sensor_data.decode("hex"))/1023*100))
-        print('value: ' + sensor_value + '% Time: ' + sensor_time + " GWIP:" + sensor_gwip + " SNR:" + str(sensor_snr))
+        print('macAddr: ' + sensor_macAddr  + ' value: ' + sensor_value + '% Time: ' + sensor_time + " GWIP:" + sensor_gwip + " rssi:" + str(sensor_rssi))
 
 
 client = mqtt.Client(protocol=mqtt.MQTTv31)
