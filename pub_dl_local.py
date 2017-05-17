@@ -17,6 +17,7 @@ now_time = time.strftime("%Hc%Mc%S")
 usage = "usage: %prog [options] [data]\n \
     options: -d for sending hex data\n \
              -c [A|a|C|c] for Class Mode.  Default is Class A\n \
+                Lowercase is unconfimed message,Uppercase is confirmed
              -i IP for which MQTT Broker. Default is localhost\n \
              -g GID for DL GW. Default is 00001c497b431fcd\n \
              -m MAC for DL Node. Default is 04000476 \n \
