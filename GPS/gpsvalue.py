@@ -1,9 +1,13 @@
 __author__ = 'Amal G Jose'
 
 import time
-import serial
 import string
 from pynmea import nmea
+try:
+    import serial
+except:
+    print 'Missing package dependency for pySerial'
+    raise
 
 ser = serial.Serial()
 ser.port = "/dev/tty.usbmodem1411"
