@@ -57,7 +57,7 @@ elif options.classtype == "B":
     print("Not Support yet.")
 msg = '{"correlationId":"' + mid + '",' \
     + '"dldata":{' \
-    + '"macAddr":"00000000' + MAC + '",' \
+    + '"macAddr":"' + MAC + '",' \
     + '"data":"' + data + '",' \
     + '"extra":{' \
     + '"port":2, "txpara":' + txpara
