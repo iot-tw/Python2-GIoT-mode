@@ -40,12 +40,16 @@ parser.add_option("-P", "--pw", action="store",
 parser.add_option("-p", action="store",
                   dest="port", default=1883,
                   help="sub from MQTT broker's Port ")
-parser.add_option("-R","--downlink", action="store_true",
+parser.add_option("-R","--showdownlink", action="store_true",
                   help="If payload is 'FF' print out Downlink Command")
+parser.add_option("-r","--downlink", action="store_true",
+                  help="If payload is 'something' pub mqtt out Downlink module")
 (options, args) = parser.parse_args()
 if options.display_lcd:
     import Adafruit_CharLCD as LCD
     lcd = LCD.Adafruit_CharLCDPlate()
+if options.downlink:
+    import subprocess
 print ("MQTT broker is:" + options.host + ":" + str(options.port))
 print ("MQTT Topic is:" + options.topic)
 
@@ -132,11 +136,15 @@ def on_message(client, userdata, msg):
     if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
         try:
             print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
-            if sensor_data.decode("hex") == str(sensor_mac)[8:].upper() and options.downlink:
-                print('\x1b[6;30;42m' + 'pub_dl_local.py -i ' + options.host +' -m '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
+            if sensor_data.decode("hex") == str(sensor_mac)[8:].upper() and options.showdownlink:
+                print('\x1b[6;30;42m' + './pub_dl_local.py -i ' + options.host +' -m '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
                 lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"
                 if lora_restart == 'Y' or lora_restart == 'y':
                     sys.exit()
+            if sensor_data == "3035303130333135" and options.downlink:
+                print("pub downlink to local broker")
+                print("gwid:" + str(gwid_data))
+                subprocess.Popen(["./pub_dl_local.py", "-i", options.host, "-m", str(sensor_mac)[8:], "-g", str(gwid_data), "-c", "c"])
             print('     Payload: ' + sensor_data + ' \x1b[6;30;42m' + 'HEX2ASCII:' + '\x1b[0m' + sensor_data.decode("hex"))
         except UnicodeDecodeError:
             print('     Payload: ' + sensor_data)
