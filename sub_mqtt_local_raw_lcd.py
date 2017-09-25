@@ -133,9 +133,9 @@ def on_message(client, userdata, msg):
         lcd.message('\nS/R:' + str(sensor_snr) + '/' + str(sensor_rssi))
 
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
-    if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
+    if msg.topic[:7] == 'GIOT-GW' and msg.topic[:10] != 'GIOT-GW/DL':
         try:
-            print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
+            #print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
             if sensor_data.decode("hex") == str(sensor_mac)[8:].upper() and options.showdownlink:
                 print('\x1b[6;30;42m' + './pub_dl_local.py -i ' + options.host +' -m '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
                 lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"
@@ -145,6 +145,24 @@ def on_message(client, userdata, msg):
                 print("pub downlink to local broker")
                 print("gwid:" + str(gwid_data))
                 subprocess.Popen(["./pub_dl_local.py", "-i", options.host, "-m", str(sensor_mac)[8:], "-g", str(gwid_data), "-c", "c"])
+            if str(sensor_mac)[8:] == "05010175" and options.downlink:
+                print("pub downlink to control something , turn on LED")
+                if sensor_data[0:2] == "01":
+                    meter_type = "CO2+RHT"
+                elif sensor_data[0:2] == "10":
+                    meter_type = "CO+RHT"
+                elif sensor_data[0:2] == "11":
+                    meter_type = "PM2.5+RHT"
+                print(sensor_data[2:6])
+                meter_temp = float(int(sensor_data[2:6], 16))/100
+                meter_h = float(int(sensor_data[6:10], 16))/100
+                meter_ppm = int(sensor_data[10:14], 16)
+                print("Type:" + meter_type + "\tTemp:"+ str(meter_temp) + "\tHume:" + str(meter_h) + "%" + "\tPPM:" + str(meter_ppm))
+                if meter_temp > 27.3 :
+                    LED_Status = "01"
+                else:
+                    LED_Status = "00"
+                subprocess.Popen(["./pub_dl_local.py", "-i", options.host, "-m", "05000006", "-g", str(gwid_data), "-c", "c", "-d", LED_Status])
             print('     Payload: ' + sensor_data + ' \x1b[6;30;42m' + 'HEX2ASCII:' + '\x1b[0m' + sensor_data.decode("hex"))
         except UnicodeDecodeError:
             print('     Payload: ' + sensor_data)
