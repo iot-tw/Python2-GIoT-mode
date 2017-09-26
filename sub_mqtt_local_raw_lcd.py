@@ -28,6 +28,9 @@ parser.add_option("-l", "--long-detail", action="store_true",
 parser.add_option("-t", "--topic", action="store",
                   dest="topic", default="#",
                   help="provide connection topic")
+parser.add_option("-D", "--degree", action="store",
+                  dest="degree", default=25,
+                  help="relay on off degree")
 parser.add_option("-i", "--ip", action="store",
                   dest="host", default="localhost",
                   help="sub from MQTT broker's IP ")
@@ -157,8 +160,8 @@ def on_message(client, userdata, msg):
                 meter_temp = float(int(sensor_data[2:6], 16))/100
                 meter_h = float(int(sensor_data[6:10], 16))/100
                 meter_ppm = int(sensor_data[10:14], 16)
-                print("Type:" + meter_type + "\tTemp:"+ str(meter_temp) + "\tHume:" + str(meter_h) + "%" + "\tPPM:" + str(meter_ppm))
-                if meter_temp > 27.3 :
+                print("Type:" + meter_type + "\tTemp:"+ str(meter_temp) + "\tHume:" + str(meter_h) + "%" + "\tPPM:" + str(meter_ppm) + "Degree over:" + options.degree + " Will turn on Relay")
+                if meter_temp > options.degree:
                     LED_Status = "01"
                 else:
                     LED_Status = "00"
@@ -188,5 +191,4 @@ try:
     client.loop_forever()
 except KeyboardInterrupt:
     sys.stdout.flush()
-    print("W: interrupt received, stopping...")
-#   pass
+    print("W: interrupt received, stopping..")
