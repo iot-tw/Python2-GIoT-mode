@@ -44,17 +44,20 @@ mid = "".join(map(lambda t: format(t, "02X"), [random.randrange(256)
 GID = options.GID
 MAC = options.MAC
 # topic = "GIOT-GW/DL/" + GID
-txpara = "6"
 if options.classtype == "a":
     txpara = '"2"'
 elif options.classtype == "A":
     txpara = '"6"'
 elif options.classtype == "c":
     txpara = '"22"'
+elif options.classtype == "oc":
+    txpara = '34'
 elif options.classtype == "C":
     txpara = '"26"'
 elif options.classtype == "B":
     print("Not Support yet.")
+else:
+    txpara = "6"
 msg = '{"correlationId":"' + mid + '",' \
     + '"dldata":{' \
     + '"macAddr":"' + MAC + '",' \
