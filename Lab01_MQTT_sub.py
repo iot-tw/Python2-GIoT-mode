@@ -13,7 +13,7 @@ import paho.mqtt.client as mqtt
 import json
 HostName = "52.193.146.103"
 PortNumber = 80
-Topic = "client/200000020/200000020-GIOT-MAKER"
+Topic = "client/200000020/200000020-GIOT-MAKER/#"
 UserName = "200000020"
 Password = "18923571"
 macAddr = "05000095"
@@ -32,19 +32,19 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
-    sensor_data = json.loads(json_data)['data']
+    # sensor_data = json.loads(json_data)['data']
     # 處理MQTT 抓下來的 資料json 中的 data 欄位，用hex decode 回來
-    sensor_value = sensor_data.decode("hex")
+    # sensor_value = sensor_data.decode("hex")
     # 抓取json 中的 gwid 這是表示通過那個AP 送進來的
-    gwid_data = json.loads(json_data)['extra']['gwid']
+    # gwid_data = json.loads(json_data)['extra']['gwid']
     # 抓取模組的MacAddr
-    sensor_macAddr = json.loads(json_data)['macAddr']
+    # sensor_macAddr = json.loads(json_data)['macAddr']
     # 過濾某一個特定GIoT AP 送進來的 MQTT 資料，其他的不要
     # 每個 Indoor AP, OutDoor AP 都有兩個gwid,所以要抓兩個進來,如果不考慮過濾可以註釋掉
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
-    if sensor_macAddr == macAddr:
-        print('ID: ' + macAddr)
-        print('AT ASCII value: ' + sensor_value)
+    # if sensor_macAddr == macAddr:
+    #     print('ID: ' + macAddr)
+     #    print('AT ASCII value: ' + sensor_value)
     print(json_data)
 
 
