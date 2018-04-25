@@ -42,9 +42,9 @@ def on_message(client, userdata, msg):
     # 過濾某一個特定GIoT AP 送進來的 MQTT 資料，其他的不要
     # 每個 Indoor AP, OutDoor AP 都有兩個gwid,所以要抓兩個進來,如果不考慮過濾可以註釋掉
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
-    if sensor_macAddr == macAddr:
-        print('ID: ' + macAddr)
-        print('AT ASCII value: ' + sensor_value)
+#    if sensor_macAddr == macAddr:
+#       print('ID: ' + macAddr)
+#       print('AT ASCII value: ' + sensor_value)
     print(json_data)
 
 
