@@ -20,7 +20,7 @@ Password = "18923571"
 macAddr = "04000476"
 now_time = time.strftime("%Hc%Mc%S")
 usage = "usage: %prog [options] [data]\n \
-    e.g.: '%prog --data \"12345678901\" will downlink to module 04000476 by Localhost Broker,Class A confirmed"
+    e.g.: '%prog --data \"12345678901\" will downlink to module 04000476 by Giot Public  Broker,Class A confirmed"
 parser = OptionParser(usage)
 parser.add_option("-d", "--data", action="store", dest="data",
                   default=now_time,
@@ -33,7 +33,7 @@ parser.add_option("-i", "--ip", action="store", dest="host",
                   default="localhost",
                   help="IP for which MQTT Broker. Default is localhost")
 parser.add_option("-g", "--gid", action="store", dest="GID",
-                  help="GID for DL GW. Default is 00001c497b431fcd")
+                  help="GID for DL GW. ")
 parser.add_option("-m", "--mac", action="store", dest="MAC",
                   default="04000476",
                   help="setting DL target Moudle MAC")

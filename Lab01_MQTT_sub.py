@@ -14,6 +14,7 @@ import json
 HostName = "52.193.146.103"
 PortNumber = 80
 Topic = "client/200000020/200000020-GIOT-MAKER"
+#Topic = "#"
 UserName = "200000020"
 Password = "18923571"
 macAddr = "05000095"
