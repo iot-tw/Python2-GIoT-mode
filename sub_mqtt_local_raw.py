@@ -76,7 +76,7 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     json_data = msg.payload
-    print(json_data)
+    # print(json_data)
     # print(msg.topic+" "+str(msg.payload))
     if msg.topic[:11] == "GIOT-GW/DL/":
         sensor_mac = json.loads(json_data)[0]['macAddr']
@@ -131,7 +131,7 @@ def on_message(client, userdata, msg):
     # if gwid_data == "00001c497b48dc03" or gwid_data == "00001c497b48dc11":
     if msg.topic[:7] == 'GIOT-GW' and msg.topic[:17] != 'GIOT-GW/DL-report':
         try:
-            print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
+            #print sensor_data.decode("hex") + str(sensor_mac)[8:].upper()
             if sensor_data.decode("hex") == str(sensor_mac)[8:].upper() and options.downlink:
                 print('\x1b[6;30;42m' + 'pub_dl_local.py -i ' + options.host +' -m '+ str(sensor_mac)[8:]+ ' -g ' + str(gwid_data) + ' -c A' +'\x1b[0m')
                 lora_restart = raw_input('Stop MQTT subscribe?[Y/n]:') or "y"

@@ -26,7 +26,7 @@ parser.add_option("-d", "--display-lcd", action="store_true",
 parser.add_option("-l", "--long-detail", action="store_true",
                   help="print detail JSON message")
 parser.add_option("-t", "--topic", action="store",
-                  dest="topic", default="client/200000020/200000020-GIOT-MAKER/+",
+                  dest="topic", default="client/200000020/200000020-GIOT-MAKER/#",
                   help="provide connection topic")
 parser.add_option("-i", "--ip", action="store",
                   dest="host", default="52.193.146.103",
@@ -76,8 +76,8 @@ def on_connect(client, userdata, flags, rc):
 
 def on_message(client, userdata, msg):
     json_data = msg.payload
-    print(json_data)
-    # print(msg.topic+" "+str(msg.payload))
+    #print(json_data)
+    print(msg.topic+" "+str(msg.payload))
     if msg.topic[:11] == "GIOT-GW/DL/":
         sensor_mac = json.loads(json_data)[0]['macAddr']
         sensor_data = json.loads(json_data)[0]['data']
@@ -103,6 +103,8 @@ def on_message(client, userdata, msg):
         sensor_type = 'Module Taipei'
     elif "05" == str(sensor_mac)[8:10]:
         sensor_type = 'Module Taiwan'
+    elif "14" == str(sensor_mac)[8:10]:
+        sensor_type = 'G76S EVK Taiwan'
     elif "00" == str(sensor_mac)[8:10]:
         sensor_type = 'Location Box '
     elif "0d" == str(sensor_mac)[8:10]:
@@ -150,10 +152,12 @@ try:
     client.on_connect = on_connect
     client.on_message = on_message
     client.username_pw_set(options.username, options.password)
+    #print("username/password"+ options.username + options.password)
 # 這裏第三個參數可以調整，每個多少時間檢查MQTT 連線狀態，通常60秒已經算短的了，
 # 爲了實驗，可以用60秒。2-5分鐘都算合理，google 的 GCM 都28分鐘檢查一次了，
 # 在實際量產部署時，要重新考慮這個值，頻寬及Server Load 不是免費啊。
 
+    #print("connect to:" + options.host + str(options.port))
     try:
         client.connect(options.host, options.port, 60)
     except:
