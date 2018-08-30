@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 # -*- coding: utf8 -*-
 # 這是一個樹莓派的範例，用LED 燈號表示溫度高低。
 # 需要有Raspberry Pi 才能使用
@@ -9,18 +9,11 @@ import RPi.GPIO as GPIO
 import paho.mqtt.client as mqtt
 import json
 # 處理 giot credentials 設定值
-import ConfigParser                                             # 匯入 配置檔 解析模塊
-from os.path import expanduser
-home = expanduser("~")
-default_value = "default"
-default_identity_file = home + "/.giot/credentials"
-config = ConfigParser.ConfigParser()
-config.read(default_identity_file)
-HostName = config.get(default_value, 'hostname')
-PortNumber = config.get(default_value, 'portnumber')
-Topic = config.get(default_value, 'topic')
-UserName = config.get(default_value, 'username')
-Password = config.get(default_value, 'password')
+HostName = "mqtt.lazyengineers.com"
+PortNumber = 1883
+Topic = "GIOT-GW/#"
+UserName = "lazyengineers"
+Password = "lazyengineers"
 
 LED_R = 17
 LED_Y = 27

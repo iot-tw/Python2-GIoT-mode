@@ -1,4 +1,4 @@
-#! /usr/bin/python
+#! /usr/bin/python3
 # -*- coding: utf8 -*-
 # dummy 就是不用模組也可驗證MQTT 連線的狀況，credentials 範例裏的 IP, account 是會固定吐出MQTT 資訊的。
 __author__ = "Marty Chao"
@@ -14,16 +14,17 @@ try:
     import paho.mqtt.client as mqtt
 except ImportError:
     print("You python need isntal paho-mqtt module")
-    print("cmd:pip install paho-mqtt")
+    print("cmd:pip3 install paho-mqtt")
     exit()
 import json
 # 下方資料是自動吐出json資料，不需要模組發送就會有資料
 HostName = "52.193.146.103"
-PortNumber = 80
+HostName = "mqtt.lazyengineers.com"
+PortNumber = 1883
 Topic = "client/200000017/200000017-GIOT-MAKER"
-Topic = "client/+/+"
-UserName = "200000017"
-Password = "44554652"
+Topic = "GIOT-GW/#"
+UserName = "lazyengineers"
+Password = "lazyengineers"
 # 放上要抓取的MacAddr 如果不改 就是全抓
 MacAddr = "00000000"
 
@@ -44,9 +45,9 @@ def on_message(client, userdata, msg):
 #    print(msg.topic+" "+str(msg.payload))
     json_data = msg.payload
 #   print(json_data)
-    sensor_data = json.loads(json_data)['data']
-    sensor_macaddr = json.loads(json_data)['macAddr']
-    sensor_time = json.loads(json_data)['recv']
+    sensor_data = json.loads(json_data)[0]['data']
+    sensor_macaddr = json.loads(json_data)[0]['macAddr']
+    sensor_time = json.loads(json_data)[0]['time']
     date_value = sensor_time.split("T")[0]
     time_value = sensor_time.split("T")[1]
     if (sensor_macaddr == MacAddr) or (MacAddr == "00000000") :
