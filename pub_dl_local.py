@@ -21,8 +21,8 @@ parser.add_option("-d", "--data", action="store", dest="data",
                   default=now_time,
                   help="for sending HEX data")
 parser.add_option("-c", "--class", action="store", dest="classtype",
-                  default="A",
-                  help="[A|a|C|c] for Class Mode.  Default is Class A\n \
+                  default="1",
+                  help="[A|a|C|c] for Class Mode.  Default is Class A once without queue\n \
                 Lowercase is unconfimed message,Uppercase is confirmed\n")
 parser.add_option("-i", "--ip", action="store", dest="host",
                   default="localhost",
@@ -46,10 +46,15 @@ MAC = options.MAC
 FPORT = options.fport
 topic = "GIOT-GW/DL/" + GID
 txpara = "6"
+# RX2 unConfirme
 if options.classtype == "a":
     txpara = '"2"'
+# Rx2 confirme
 elif options.classtype == "A":
     txpara = '"6"'
+# RX1 unConfirme
+elif options.classtype == "1":
+    txpara = '"1"'
 elif options.classtype == "c":
     txpara = '"22"'
 elif options.classtype == "C":
