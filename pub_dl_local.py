@@ -33,6 +33,9 @@ parser.add_option("-g", "--gid", action="store", dest="GID",
 parser.add_option("-m", "--mac", action="store", dest="MAC",
                   default="04000476",
                   help="setting DL target Moudle MAC")
+parser.add_option("-f", "--fport", action="store", dest="fport",
+                  default="204",
+                  help="setting DL target Moudle function port")
 (options, args) = parser.parse_args()
 if options.data:
     data = options.data
@@ -40,6 +43,7 @@ mid = "".join(map(lambda t: format(t, "02X"), [random.randrange(256)
               for x in range(16)]))
 GID = options.GID
 MAC = options.MAC
+FPORT = options.fport
 topic = "GIOT-GW/DL/" + GID
 txpara = "6"
 if options.classtype == "a":
@@ -55,7 +59,9 @@ elif options.classtype == "B":
 msg = '[{"macAddr":"00000000' + MAC + '",' \
     + '"data":"' + data + '",' \
     + '"id":"' + mid + '",' \
-    + '"extra":{"port":2, "txpara":'+txpara+'}}]'
+    + '"extra":{"port":' + FPORT \
+    +       ',"txpara":' + txpara \
+    + '}}]'
 print ("Broker:"+options.host+" Topic:"+topic+" Class Mode:"+options.classtype)
 print (msg)
 client = mqtt.Client(protocol=mqtt.MQTTv31)
