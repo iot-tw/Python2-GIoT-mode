@@ -5,9 +5,9 @@
 使用台北市府物聯網，宜蘭縣府，新竹市府的PoC 環境是不同格式。
 """
 __author__ = "Marty Chao"
-__version__ = "1.0.2"
+__version__ = "2.0.1"
 __maintainer__ = "Marty Chao"
-__email__ = "marty@browan.com"
+__email__ = "marty@freedom-tek.com"
 __status__ = "Production"
 # Change log 1.0.1, support paho-mqtt 1.2
 
